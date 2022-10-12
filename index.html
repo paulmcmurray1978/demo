@@ -1,0 +1,263 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div id="foodbankList"></div>
+<div id="modal" class="modal">
+  <span id="modal-close" class="modal-close">&times;</span>
+  <img id="modal-content" class="modal-content">
+  <div id="modal-caption" class="modal-caption"></div>
+</div>
+</body>
+</html> 
+<script>
+const app = async () => {
+    fetch('https://q0ev9yiw2b.execute-api.eu-west-1.amazonaws.com/dev/v1/dg/all-foodbank-data')
+        .then(response => response.json())
+        .then(result => {
+            const data = result
+            handleData(data)
+        });
+    const handleData = (data) => {
+        data.forEach(async(row,index) => {
+            const rowData = await getFbData(row.split("::")[0]);
+            let newHtml = `
+                <div class="card">
+                    <div class="container">
+                        <h2>${rowData.name}</h2>
+                        <p>${rowData.address}</p>
+                        <p>${rowData.phone}</p>
+                        <p>${rowData.email}</p>
+                        <p><img class="modal-target" alt="${rowData.name + " " + rowData.postcode} map image" src="${rowData.urls.map}" style="width:100%" /></p>
+                        <button onclick="getInventory('${rowData.postcode}','${rowData.slug}')" class="button">Inventory</button>
+                    </div>
+                </div>
+            `;
+            document.getElementById("foodbankList").innerHTML = document.getElementById("foodbankList").innerHTML + newHtml;
+        })
+    }
+    
+    getFbData = async (slug) => {
+        const response = await fetch(`https://q0ev9yiw2b.execute-api.eu-west-1.amazonaws.com/dev/v1/dg/foodbank-data/${slug}`)
+        const data = await response.json()
+        return data
+    }
+    
+    
+}
+
+app();
+function getInventory(postcode,slug) {
+    fetch(`https://q0ev9yiw2b.execute-api.eu-west-1.amazonaws.com/dev//v1/dg/inventory/${slug}/${postcode.toLowerCase().replace(/ /g, '')}/mysecretkey`)
+    .then(response => response.json())
+    .then(result => {
+        const data = result[0].inventory
+        console.log(data)
+        parseInventory(data)
+    });
+}
+
+const parseInventory = (data) => {
+    data.forEach(async(row,index) => {
+        newHtml = `
+        
+            <div class="brand">
+                <form>
+                <a href="./index.html">back</a>
+                <h2>Brand: ${row.brand}</h2>
+                <div class="donations">
+                    <table id="customers">
+                        <thead>
+                            <tr>
+                                <th>Donation</th>
+                                <th>Quantity</th>
+                                <th>SKU</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                    `;
+                    
+                    row.inventory.forEach((item,index) => {
+                        newHtml +=`
+                            <tr>
+                                <td>${item.description}</td>
+                                <td>${item.quantity}</td>
+                                <td>${item.sku}</td>
+                            </tr>
+                        `;
+                    })
+
+        document.getElementById("foodbankList").innerHTML =  newHtml;
+    })
+}
+        // Modal Setup
+var modal = document.getElementById('modal');
+
+var modalClose = document.getElementById('modal-close');
+modalClose.addEventListener('click', function() { 
+  modal.style.display = "none";
+});
+
+// global handler
+document.addEventListener('click', function (e) { 
+  if (e.target.className.indexOf('modal-target') !== -1) {
+      var img = e.target;
+      var modalImg = document.getElementById("modal-content");
+      var captionText = document.getElementById("modal-caption");
+      modal.style.display = "block";
+      modalImg.src = img.src;
+      captionText.innerHTML = img.alt;
+   }
+});
+
+</script>
+
+<style>
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 22%;
+  border-radius: 5px;
+  float: left;
+  font-size: 7px;
+  height:300px;
+  margin: 10 10 10 10;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+img {
+  border-radius: 5px 5px 0 0;
+}
+
+.container {
+  padding: 2px 16px;
+}
+
+.modal-target {
+  width: 200px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.modal-target:hover {opacity: 0.7;}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
+}
+
+/* Modal Content (image) */
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  opacity: 1 !important;
+  max-width: 300px;
+}
+
+/* Caption of Modal Image */
+.modal-caption {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 1200px;
+  text-align: center;
+  color: white;
+  font-weight: 700;
+  font-size: 1em;
+  margin-top: 32px;
+}
+
+/* Add Animation */
+.modal-content, .modal-caption {  
+  -webkit-animation-name: zoom;
+  -webkit-animation-duration: 0.6s;
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+  from {-webkit-atransform:scale(0)} 
+  to {-webkit-transform:scale(1)}
+}
+
+@keyframes zoom {
+  from {transform:scale(0)} 
+  to {transform:scale(1)}
+}
+
+/* The Close Button */
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.modal-close:hover,
+.modal-close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 5px 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 8px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.button:hover {
+    cursor:pointer;
+    color:#4CAF50;
+    background-color:white
+}
+
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+  </style>
