@@ -5,12 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Barcode Detector</title>
   <link rel="stylesheet" type="text/css" href="scanner.css"/>
+  <script>
+    window.alert = function() {};
+    window.confirm = function() { return true; };
+    window.prompt = function() { return null; };
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/dynamsoft-javascript-barcode@9.0.2/dist/dbr.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/barcode-detection@0.4.0/dist/barcode-detector.umd.js"></script>
   <script src="https://unpkg.com/eruda@2.4.1/eruda.js"></script>
   <script>eruda.init();</script>
 </head>
-<body>
+<body onLoad="maskoff()">
   <div class="home">
     <div id="status">Initializing...</div>
     <button id="startButton">Start Scan</button>
@@ -30,3 +35,10 @@
   </script>
 </body>
 </html>
+<script>
+  function maskoff() {
+  document.querySelectorAll('.dls-license-mask').forEach(function(el) {
+   el.style.display = 'none';
+});
+  }
+</script>
