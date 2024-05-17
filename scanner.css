@@ -1,4 +1,4 @@
-.fullscreen {
+/* .fullscreen {
   width:100%;
   height:100%;
   position:absolute;
@@ -25,4 +25,101 @@
   fill:rgba(85,240,40,0.5);          
   stroke:green;
   stroke-width:1;
+} */
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+.home {
+  text-align: center;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  margin: 40px auto;
+  max-width: 500px;
+}
+
+#status {
+  margin-bottom: 20px;
+  font-size: 1.2em;
+  color: #555;
+}
+
+button {
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1em;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+input[type="file"] {
+  margin-top: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+img#selectedImg {
+  display: block;
+  margin-top: 20px;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+}
+
+.scanner {
+  display: none;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  margin: 40px auto;
+  max-width: 600px;
+  text-align: center;
+}
+
+#cameraSelect {
+  margin-bottom: 20px;
+  padding: 10px;
+  font-size: 1em;
+}
+
+svg.overlay.fullscreen, video.camera.fullscreen {
+  width: 100%;
+  height: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+#closeButton {
+  margin-top: 20px;
+  background-color: #dc3545;
+}
+
+#closeButton:hover {
+  background-color: #c82333;
+}
+
+/* Footer */
+#text, #barcodeValue {
+  margin: 20px auto;
+  text-align: center;
+  font-size: 1em;
+  color: #555;
 }

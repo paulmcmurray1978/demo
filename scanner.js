@@ -7,8 +7,9 @@ var home = document.querySelector(".home");
 var startButton = document.querySelector("#startButton");
 
 startButton.onclick = function () {
-  scannerContainer.style.display = "";
-  home.style.display = "none";
+  scannerContainer.style.display = "block";
+  // document.getElementById("overlay").style.display = "none";
+  // home.style.display = "none";
   loadDevicesAndPlay();
 };
 var fileInput = document.querySelector("#fileInput");
@@ -180,11 +181,11 @@ function onPlayed() {
 
 function updateSVGViewBoxBasedOnVideoSize() {
   var camera = document.getElementsByClassName("camera")[0];
-  var svg = document.getElementsByTagName("svg")[0];
-  svg.setAttribute(
-    "viewBox",
-    "0 0 " + camera.videoWidth + " " + camera.videoHeight
-  );
+  // var svg = document.getElementsByTagName("svg")[0];
+  // svg.setAttribute(
+  //   "viewBox",
+  //   "0 0 " + camera.videoWidth + " " + camera.videoHeight
+  // );
 }
 
 function startDecoding() {
@@ -208,7 +209,7 @@ async function decode() {
 
 function drawOverlay(barcodes) {
   var svg = document.getElementsByTagName("svg")[0];
-  svg.innerHTML = "";
+  // svg.innerHTML = "";
   for (var i = 0; i < barcodes.length; i++) {
     var barcode = barcodes[i];
     console.log(barcode);
@@ -234,8 +235,9 @@ function drawOverlay(barcodes) {
     text.setAttribute("y", lr.y1);
     text.setAttribute("fill", "red");
     text.setAttribute("fontSize", "20");
-    svg.append(polygon);
-    svg.append(text);
+    // svg.append(polygon);
+    // svg.append(text);
+    // svg.style.display = "none";
     document.getElementById("theScanner").innerHTML = barcode.rawValue;
 
     const barcodeData = getBarcodeData(barcode.rawValue).then((result) => {
