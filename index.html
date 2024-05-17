@@ -1,10 +1,162 @@
+<style>
+  body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+.home {
+  text-align: center;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  margin: 40px auto;
+  max-width: 500px;
+}
+
+#status {
+  margin-bottom: 20px;
+  font-size: 1.2em;
+  color: #555;
+}
+
+button, #detectImageLabel {
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1em;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+button:hover, #detectImageLabel:hover {
+  background-color: #0056b3;
+}
+
+input[type="text"] {
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+img#selectedImg {
+  display: block;
+  margin-top: 20px;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+}
+
+.scanner {
+  display: none;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  margin: 40px auto;
+  max-width: 600px;
+  text-align: center;
+}
+
+#cameraSelect {
+  margin-bottom: 20px;
+  padding: 10px;
+  font-size: 1em;
+}
+
+svg.overlay.fullscreen, video.camera.fullscreen {
+  width: 100%;
+  height: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+#closeButton {
+  margin-top: 20px;
+  background-color: #dc3545;
+}
+
+#closeButton:hover {
+  background-color: #c82333;
+}
+
+/* Footer */
+#text, #barcodeValue {
+  margin: 20px auto;
+  text-align: center;
+  font-size: 1em;
+  color: #555;
+}
+
+#text {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  padding: 20px;
+  max-width: 600px;
+  margin: auto;
+}
+
+.item {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  padding: 15px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.item:last-child {
+  margin-bottom: 0;
+}
+
+.item::before {
+  content: "• ";
+  color: #5cb85c;
+  font-weight: bold;
+}
+#theScanner {
+  text-align: center;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 40px auto;
+  max-width: 500px;
+}
+
+.product-name {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.product-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-top: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+</style>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Barcode Detector</title>
-  <link rel="stylesheet" type="text/css" href="scanner.css"/>
+  <!-- <link rel="stylesheet" type="text/css" href="scanner.css"/> -->
   <script>
     window.alert = function() {};
     window.confirm = function() { return true; };
@@ -18,8 +170,15 @@
 <body onLoad="maskoff()">
   <div class="home">
     <div id="status">Initializing...</div>
+    <div>
+      <label for="postcode">What is your postcode?</label>
+      <input type="text" id="postcode"/>
+      <div id="postcodeError" style="color: red; display: none;">Invalid postcode format</div>
+    </div>
     <button id="startButton">Start Scan</button>
-    Detect an Image: <input id="fileInput" type="file"/>
+    <label for="fileInput" id="detectImageLabel" class="button">Detect an Image</label>
+    <input id="fileInput" type="file" accept="image/*" style="display: none;"/>
+    
     <img id="selectedImg"/>
   </div>
   <div id="theScanner" class="scanner" style="display:none;">
@@ -41,4 +200,21 @@
    el.style.display = 'none';
 });
   }
+
+  document.getElementById('postcode').addEventListener('input', validatePostcode);
+
+    function validatePostcode() {
+      const postcode = document.getElementById('postcode').value;
+      const scan = document.getElementById("startButton")
+      const regex = /^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z]))))\s?[0-9][A-Za-z]{2})$/;
+      const errorDiv = document.getElementById('postcodeError');
+      
+      if (regex.test(postcode)) {
+        errorDiv.style.display = 'none';
+        // scan.style.display = "inline-block"
+      } else {
+        errorDiv.style.display = 'block';
+        // scan.style.display = "none"
+      }
+    }
 </script>

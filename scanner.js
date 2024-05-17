@@ -8,9 +8,14 @@ var startButton = document.querySelector("#startButton");
 
 startButton.onclick = function () {
   scannerContainer.style.display = "block";
-  // document.getElementById("overlay").style.display = "none";
-  // home.style.display = "none";
-  loadDevicesAndPlay();
+  const regex =
+    /^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z]))))\s?[0-9][A-Za-z]{2})$/;
+  const postcode = document.getElementById("postcode").value;
+  if (regex.test(postcode)) {
+    // document.getElementById("overlay").style.display = "none";
+    // home.style.display = "none";
+    loadDevicesAndPlay();
+  }
 };
 var fileInput = document.querySelector("#fileInput");
 fileInput.onchange = function (event) {
@@ -37,6 +42,7 @@ fileInput.onchange = function (event) {
       console.log("IMAGE", image);
 
       const postcode = "NE303TB";
+      // const postcode = document.getElementById("postcode").value;
       const data = await getfoodBankList(postcode, productName);
 
       // .then((result) => {
@@ -83,7 +89,8 @@ async function initBarcodeDetector() {
     // );
 
     BarcodeDetectorPolyfill.setLicense(
-      "DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTE2NDk4Mjk3OTI2MzUiLCJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSIsInNlc3Npb25QYXNzd29yZCI6IndTcGR6Vm05WDJrcEQ5YUoifQ=="
+      // "DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTE2NDk4Mjk3OTI2MzUiLCJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSIsInNlc3Npb25QYXNzd29yZCI6IndTcGR6Vm05WDJrcEQ5YUoifQ=="
+      "DLS2eyJoYW5kc2hha2VDb2RlIjoiMTAyODQxMDUwLVRYbFhaV0pRY205cSIsIm1haW5TZXJ2ZXJVUkwiOiJodHRwczovL21kbHMuZHluYW1zb2Z0b25saW5lLmNvbSIsIm9yZ2FuaXphdGlvbklEIjoiMTAyODQxMDUwIiwic3RhbmRieVNlcnZlclVSTCI6Imh0dHBzOi8vc2Rscy5keW5hbXNvZnRvbmxpbmUuY29tIiwiY2hlY2tDb2RlIjotMTQxNjAxMTczMn0"
     );
     let reader = await BarcodeDetectorPolyfill.init();
     console.log(reader); // You can modify the runtime settings of the reader instance.
@@ -250,7 +257,11 @@ function drawOverlay(barcodes) {
       document.getElementById("theScanner").innerHTML =
         productName + "<img src='" + image + "'/>\r\r";
 
-      const postcode = "NE303TB";
+      // const postcode = "NE303TB";
+      const postcode = document
+        .getElementById("postcode")
+        .value.toLowerCase()
+        .replace(/[^a-z]/g, "");
       const data = getfoodBankList(postcode, productName);
       //   .then((result) => {
       //     parseData(result.data.data.data, productName);
