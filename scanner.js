@@ -35,15 +35,19 @@ fileInput.onchange = function (event) {
       document.getElementById("theScanner").style.display = "block";
       const productName = result["brands"] + " " + result["product_name"];
       const image = result["image_thumb_url"];
-      console.log(productName);
-      console.log(image);
+      // console.log(productName);
+      // console.log(image);
       document.getElementById("theScanner").innerHTML =
         productName + "\r\r" + "<img width='200px' src='" + image + "'/>\r";
-      console.log("IMAGE", image);
+      // console.log("IMAGE", image);
 
-      const postcode = "NE303TB";
+      // const postcode = "NE303TB";
+      console.log(document.getElementById("postcode").value);
       // const postcode = document.getElementById("postcode").value;
-      const data = await getfoodBankList(postcode, productName);
+      const data = await getfoodBankList(
+        document.getElementById("postcode").value,
+        productName
+      );
 
       // .then((result) => {
       //   // parseData(result.data.data.data, productName);
@@ -257,11 +261,18 @@ function drawOverlay(barcodes) {
       document.getElementById("theScanner").innerHTML =
         productName + "<img src='" + image + "'/>\r\r";
 
+      const productDisplay = document.getElementById("productDisplay");
+      productDisplay.innerHTML = `
+        <div class="product-name">${productName}</div>
+        <img src="${image}" class="product-image"/>
+      `;
+
       // const postcode = "NE303TB";
       const postcode = document
         .getElementById("postcode")
         .value.toLowerCase()
         .replace(/[^a-z]/g, "");
+      console.log(postcode);
       const data = getfoodBankList(postcode, productName);
       //   .then((result) => {
       //     parseData(result.data.data.data, productName);
@@ -288,9 +299,10 @@ const getBarcodeData = async (barcode) => {
 };
 
 const getfoodBankList = (postcode, productName) => {
+  console.log("postcode", postcode);
   let fetchRes = fetch(
     "https://q0ev9yiw2b.execute-api.eu-west-1.amazonaws.com/dev/v0/dg/postcode/" +
-      "ne303tb" +
+      postcode +
       "/foodbanks"
   );
 
@@ -339,18 +351,18 @@ const parseData = (data, productName) => {
     let needs = row.needs.needs.split("\n");
     if (index < 10 && needs.length > 1) {
       let question =
-        "given this list of products: " +
+        "This is the name of a product you can buy in a supermarket " +
         items.join(", ") +
-        ". Do any fit into this list of categories with a strong match, and if so , please return the matching category '" +
-        needs.join(",") +
-        "'. ";
+        ". This is a list of things a food bank needs, seperate by a colon.  " +
+        needs.join(" : ") +
+        "'.  Please tell me which item from the list the product fits into. ";
       //   console.log(needs.join(", "));
       //   console.log(question);
 
       // let response = askGenAiAQuestion(question)
       let response = askBedrockAQuestion(question)
         .then((result) => {
-          console.log("bedrock result", result);
+          // console.log("bedrock result", result);
           if (
             result.length > 1 &&
             row.name &&
@@ -377,7 +389,6 @@ const parseData = (data, productName) => {
 };
 
 const askBedrockAQuestion = async (question) => {
-  console.log("as bedrock a question", question);
   try {
     const response = await fetch(
       "https://q0ev9yiw2b.execute-api.eu-west-1.amazonaws.com/dev/v1/dg/bedrock",
@@ -392,36 +403,8 @@ const askBedrockAQuestion = async (question) => {
       }
     );
     const data = await response.json();
-    console.log("BEDROCK DATA", JSON.parse(data.body).Answer);
-    // document.getElementById("theScanner").appendChild(JSON.stringify(data));
     return JSON.parse(data.body).Answer;
   } catch (error) {
     console.log("error", error.message);
   }
 };
-
-// function createCORSRequest(method, url, headers = true) {
-//   var xhr = new XMLHttpRequest();
-
-//   if ("withCredentials" in xhr) {
-//     console.log("XHR for Chrome/Firefox/Opera/Safari.");
-//     xhr.open(method, url, true);
-//   } else if (typeof XDomainRequest != "undefined") {
-//     // XDomainRequest for IE.
-//     xhr = new XDomainRequest();
-//     xhr.open(method, url);
-//   } else {
-//     // CORS not supported.
-//     xhr = null;
-//   }
-//   if (headers === false) {
-//     xhr.setRequestHeader("Access-Control-Allow-Origin", "http://localhost");
-//     xhr.setRequestHeader(
-//       "Access-Control-Allow-Methods",
-//       "GET, POST, OPTIONS, PUT, PATCH, DELETE"
-//     );
-//     xhr.setRequestHeader("Access-Control-Allow-Headers", "Content-Type");
-//   }
-//   console.log(xhr);
-//   return xhr;
-// }
