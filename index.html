@@ -194,6 +194,11 @@ svg.overlay.fullscreen, video.camera.fullscreen {
 }
   </style>
   <script>
+    function maskoff() {
+      document.querySelectorAll('.dls-license-mask').forEach(function(el) {
+        el.style.display = 'none';
+      });
+    }
     window.alert = function() {};
     window.confirm = function() { return true; };
     window.prompt = function() { return null; };
@@ -208,12 +213,13 @@ svg.overlay.fullscreen, video.camera.fullscreen {
     <img src="dg-logo.png" alt="Donation Genie Logo" class="logo">
     <div class="title">Donation Genie</div>
     <div>
+      <div id="status">Initialising</div>
       <label for="postcode">What is your postcode?</label>
       <input type="text" id="postcode"/>
       <div id="postcodeError" style="color: red; display: none;">Invalid postcode format</div>
     </div>
-    <button id="startButton">Start Scan</button>
-    <label for="fileInput" id="detectImageLabel" class="button">Detect an Image</label>
+    <button id="startButton" style="display:none">Start Scan</button>
+    <label for="fileInput" id="detectImageLabel" class="button">Take a picture of a barcode</label>
     <input id="fileInput" type="file" accept="image/*" style="display: none;"/>
     
     <img id="selectedImg"/>
@@ -231,11 +237,7 @@ svg.overlay.fullscreen, video.camera.fullscreen {
   <div id="barcodeValue"></div>
   <script src="scanner.js"></script>
   <script>
-    function maskoff() {
-      document.querySelectorAll('.dls-license-mask').forEach(function(el) {
-        el.style.display = 'none';
-      });
-    }
+    
 
     document.getElementById('postcode').addEventListener('input', validatePostcode);
 
