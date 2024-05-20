@@ -192,13 +192,99 @@ svg.overlay.fullscreen, video.camera.fullscreen {
   margin-top: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
+To add a reset button that restarts the page, you can include it in the HTML and style it in the CSS. This button will use JavaScript to reload the page when clicked.
+
+Here's the updated code:
+
+html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Donation Genie - Barcode Detector</title>
+  <style>
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4; /* Light grey background to match the logo's simplicity */
+  margin: 0;
+  padding: 0;
+  color: #333333; /* Dark text for readability */
+}
+
+.home {
+  text-align: center;
+  padding: 20px;
+  background-color: #ffffff; /* White background to make the content pop */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Softer shadow */
+  border-radius: 6px;
+  margin: 40px auto;
+  max-width: 500px;
+  border: 2px solid #e1e1e1; /* Light border to blend with the background */
+  position: relative;
+}
+
+.home img.logo {
+  width: 100px;
+  margin-bottom: 20px;
+}
+
+.home .title {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 20px;
+}
+
+#status {
+  margin-bottom: 20px;
+  font-size: 1.1em;
+  color: #555555;
+}
+
+button, #detectImageLabel {
+  background-color: #28a745; /* Green to match the leaf in the logo */
+  color: #ffffff;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1.1em;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.1s;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+button:hover, #detectImageLabel:hover {
+  background-color: #218838; /* Darker green on hover */
+}
+
+button:active, #detectImageLabel:active {
+  transform: scale(0.95);
+}
+
+.reset-button {
+  background-color: #007bff; /* Blue for the reset button */
+  color: #ffffff;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1.1em;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.1s;
+  margin-top: 10px;
+}
+
+.reset-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.reset-button:active {
+  transform: scale(0.95);
+}
   </style>
   <script>
-    function maskoff() {
-      document.querySelectorAll('.dls-license-mask').forEach(function(el) {
-        el.style.display = 'none';
-      });
-    }
     window.alert = function() {};
     window.confirm = function() { return true; };
     window.prompt = function() { return null; };
@@ -213,7 +299,7 @@ svg.overlay.fullscreen, video.camera.fullscreen {
     <img src="dg-logo.png" alt="Donation Genie Logo" class="logo">
     <div class="title">Donation Genie</div>
     <div>
-      <div id="status">Initialising</div>
+      <div id="status">Initializing</div>
       <label for="postcode">What is your postcode?</label>
       <input type="text" id="postcode"/>
       <div id="postcodeError" style="color: red; display: none;">Invalid postcode format</div>
@@ -223,6 +309,8 @@ svg.overlay.fullscreen, video.camera.fullscreen {
     <input id="fileInput" type="file" accept="image/*" style="display: none;"/>
     
     <img id="selectedImg"/>
+    <button class="reset-button" onclick="resetPage()">Reset</button>
+  </div>
   </div>
   <div id="theScanner" class="scanner" style="display:none;">
     <select id="cameraSelect"></select>
@@ -237,11 +325,27 @@ svg.overlay.fullscreen, video.camera.fullscreen {
   <div id="barcodeValue"></div>
   <script src="scanner.js"></script>
   <script>
-    
-
-    document.getElementById('postcode').addEventListener('input', validatePostcode);
+    function maskoff() {
+      document.querySelectorAll('.dls-license-mask').forEach(function(el) {
+        el.style.display = 'none';
+      });
+    }
 
     function validatePostcode() {
       const postcode = document.getElementById('postcode').value;
       const scan = document.getElementById("startButton")
-      const regex = /^([Gg][Ii][R
+      const regex = /^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z]))))\s?[0-9][A-Za-z]{2})$/;
+      const errorDiv = document.getElementById('postcodeError');
+
+      if (regex.test(postcode)) {
+        errorDiv.style.display = 'none';
+        // scan.style.display = "inline-block"
+      } else {
+        errorDiv.style.display = 'block';
+        // scan.style.display = "none"
+      }
+    }
+    function resetPage() {
+      location.reload();
+    }
+  </script>
