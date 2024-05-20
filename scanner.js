@@ -314,31 +314,6 @@ const getfoodBankList = (postcode, productName) => {
       console.log("RESULT", d.data.data);
       parseData(d.data.data, productName);
     });
-  // return fetch(
-  //   "https://q0ev9yiw2b.execute-api.eu-west-1.amazonaws.com/dev/v0/dg/postcode/" +
-  //     "ne303tb" +
-  //     "/foodbanks",
-  //   { mode: "no-cors" }
-  // );
-  // .then((response) => response.text())
-  // .then((data) => console.log("DATA", data));
-  // const response = await fetch({
-  //   method: "get",
-  //   url:
-  //     "https://q0ev9yiw2b.execute-api.eu-west-1.amazonaws.com/dev/v0/dg/postcode/" +
-  //     postcode +
-  //     "/foodbanks",
-  //   mode: "cors",
-  //   headers: {
-  //     "Access-Control-Allow-Origin": "*",
-  //   },
-  // }).then((result) => {
-  //   console.log("result", result);
-  // });
-  // console.log("after call", response);
-  // const data = await response.json();
-  // console.log("foodbank data");
-  // return data;
 };
 
 const parseData = (data, productName) => {

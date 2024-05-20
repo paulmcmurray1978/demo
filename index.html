@@ -7,21 +7,21 @@
   <style>
 body {
   font-family: Arial, sans-serif;
-  background-color: #f4f4f4; /* Light grey background to match the logo's simplicity */
+  background-color: #f4f4f4;
   margin: 0;
   padding: 0;
-  color: #333333; /* Dark text for readability */
+  color: #333333;
 }
 
 .home {
   text-align: center;
   padding: 20px;
-  background-color: #ffffff; /* White background to make the content pop */
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Softer shadow */
+  background-color: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   border-radius: 6px;
   margin: 40px auto;
   max-width: 500px;
-  border: 2px solid #e1e1e1; /* Light border to blend with the background */
+  border: 2px solid #e1e1e1;
   position: relative;
 }
 
@@ -44,7 +44,7 @@ body {
 }
 
 button, #detectImageLabel {
-  background-color: #28a745; /* Green to match the leaf in the logo */
+  background-color: #28a745;
   color: #ffffff;
   border: none;
   padding: 12px 24px;
@@ -57,7 +57,7 @@ button, #detectImageLabel {
 }
 
 button:hover, #detectImageLabel:hover {
-  background-color: #218838; /* Darker green on hover */
+  background-color: #218838;
 }
 
 button:active, #detectImageLabel:active {
@@ -71,201 +71,12 @@ input[type="text"] {
   border-radius: 6px;
   background-color: #ffffff;
   color: #333333;
-}
-
-img#selectedImg {
-  display: block;
-  margin-top: 20px;
-  max-width: 100%;
-  height: auto;
-  border: 2px solid #e1e1e1;
-  border-radius: 6px;
-  padding: 6px;
-}
-
-.scanner {
-  display: none;
-  padding: 20px;
-  background-color: #ffffff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  border-radius: 6px;
-  margin: 40px auto;
-  max-width: 560px;
-  text-align: center;
-  border: 2px solid #e1e1e1;
-}
-
-#cameraSelect {
-  margin-bottom: 20px;
-  padding: 12px;
   font-size: 1em;
-  border-radius: 6px;
-  background-color: #ffffff;
-  color: #333333;
-  border: 2px solid #e1e1e1;
-}
-
-svg.overlay.fullscreen, video.camera.fullscreen {
-  width: 100%;
-  height: auto;
-  border: 2px solid #e1e1e1;
-  border-radius: 6px;
-}
-
-#closeButton {
-  margin-top: 20px;
-  background-color: #dc3545; /* Red to match the tomato in the logo */
-  color: #ffffff;
-  border: none;
-  padding: 12px 24px;
-  font-size: 1.1em;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.1s;
-}
-
-#closeButton:hover {
-  background-color: #c82333; /* Darker red on hover */
-}
-
-#closeButton:active {
-  transform: scale(0.95);
-}
-
-#text, #barcodeValue {
-  margin: 20px auto;
-  text-align: center;
-  font-size: 1em;
-  color: #555555;
-}
-
-#text {
-  font-family: Arial, sans-serif;
-  line-height: 1.6;
-  color: #333333;
-  padding: 20px;
-  max-width: 580px;
-  margin: auto;
-}
-
-.item {
-  background: #ffffff;
-  border: 2px solid #e1e1e1;
-  border-radius: 6px;
-  margin-bottom: 15px;
-  padding: 15px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-}
-
-.item:last-child {
-  margin-bottom: 0;
-}
-
-.item::before {
-  content: "• ";
-  color: #28a745; /* Matching green bullet */
-  font-weight: bold;
-}
-
-#theScanner {
-  text-align: center;
-  padding: 20px;
-  background-color: #ffffff;
-  border-radius: 6px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  margin: 40px auto;
-  max-width: 480px;
-  border: 2px solid #e1e1e1;
-}
-
-.product-name {
-  font-size: 1.3em;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #333333;
-}
-
-.product-image {
   max-width: 100%;
-  height: auto;
-  border-radius: 6px;
-  margin-top: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-To add a reset button that restarts the page, you can include it in the HTML and style it in the CSS. This button will use JavaScript to reload the page when clicked.
-
-Here's the updated code:
-
-html
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Donation Genie - Barcode Detector</title>
-  <style>
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4; /* Light grey background to match the logo's simplicity */
-  margin: 0;
-  padding: 0;
-  color: #333333; /* Dark text for readability */
-}
-
-.home {
-  text-align: center;
-  padding: 20px;
-  background-color: #ffffff; /* White background to make the content pop */
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Softer shadow */
-  border-radius: 6px;
-  margin: 40px auto;
-  max-width: 500px;
-  border: 2px solid #e1e1e1; /* Light border to blend with the background */
-  position: relative;
-}
-
-.home img.logo {
-  width: 100px;
-  margin-bottom: 20px;
-}
-
-.home .title {
-  font-size: 1.5em;
-  font-weight: bold;
-  color: #333333;
-  margin-bottom: 20px;
-}
-
-#status {
-  margin-bottom: 20px;
-  font-size: 1.1em;
-  color: #555555;
-}
-
-button, #detectImageLabel {
-  background-color: #28a745; /* Green to match the leaf in the logo */
-  color: #ffffff;
-  border: none;
-  padding: 12px 24px;
-  font-size: 1.1em;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.1s;
-  display: inline-block;
-  margin-top: 10px;
-}
-
-button:hover, #detectImageLabel:hover {
-  background-color: #218838; /* Darker green on hover */
-}
-
-button:active, #detectImageLabel:active {
-  transform: scale(0.95);
 }
 
 .reset-button {
-  background-color: #007bff; /* Blue for the reset button */
+  background-color: #007bff;
   color: #ffffff;
   border: none;
   padding: 12px 24px;
@@ -277,11 +88,82 @@ button:active, #detectImageLabel:active {
 }
 
 .reset-button:hover {
-  background-color: #0056b3; /* Darker blue on hover */
+  background-color: #0056b3;
 }
 
 .reset-button:active {
   transform: scale(0.95);
+}
+
+.faq-button {
+  background-color: #ffc107;
+  color: #333333;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1.1em;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.1s;
+  margin-top: 10px;
+}
+
+.faq-button:hover {
+  background-color: #e0a800;
+}
+
+.faq-button:active {
+  transform: scale(0.95);
+}
+
+/* Modal styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+  padding-top: 60px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 500px;
+  border-radius: 6px;
+  transform: scale(0.8);
+  transition: transform 0.3s ease;
+}
+
+.modal.show {
+  display: block;
+  opacity: 1;
+}
+
+.modal-content.show {
+  transform: scale(1);
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }
   </style>
   <script>
@@ -301,7 +183,7 @@ button:active, #detectImageLabel:active {
     <div>
       <div id="status">Initializing</div>
       <label for="postcode">What is your postcode?</label>
-      <input type="text" id="postcode"/>
+      <input type="text" id="postcode" oninput="validatePostcode()"/>
       <div id="postcodeError" style="color: red; display: none;">Invalid postcode format</div>
     </div>
     <button id="startButton" style="display:none">Start Scan</button>
@@ -310,6 +192,7 @@ button:active, #detectImageLabel:active {
     
     <img id="selectedImg"/>
     <button class="reset-button" onclick="resetPage()">Reset</button>
+    <button class="faq-button" onclick="openFAQ()">FAQ</button>
   </div>
   </div>
   <div id="theScanner" class="scanner" style="display:none;">
@@ -323,6 +206,20 @@ button:active, #detectImageLabel:active {
   </div>
   <div id="text"></div>
   <div id="barcodeValue"></div>
+
+  <!-- The Modal -->
+  <div id="faqModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeFAQ()">&times;</span>
+      <h2>FAQ</h2>
+      <p>This tool allows you to scan a barcode and determine who needs the item near the postcode you entered.</p>
+      <p>1. Enter your postcode in the provided field.</p>
+      <p>2. Take a picture of the barcode using the 'Take a picture of a barcode' button.</p>
+      <p>3. The system will scan the barcode and identify the item.</p>
+      <p>4. It will then check who needs the item near your location.</p>
+    </div>
+  </div>
+
   <script src="scanner.js"></script>
   <script>
     function maskoff() {
@@ -339,13 +236,43 @@ button:active, #detectImageLabel:active {
 
       if (regex.test(postcode)) {
         errorDiv.style.display = 'none';
-        // scan.style.display = "inline-block"
+        scan.style.display = "inline-block"
       } else {
         errorDiv.style.display = 'block';
-        // scan.style.display = "none"
+        scan.style.display = "none"
       }
     }
+
     function resetPage() {
       location.reload();
     }
+
+    function openFAQ() {
+      const modal = document.getElementById("faqModal");
+      const modalContent = document.querySelector(".modal-content");
+      modal.style.display = "block";
+      setTimeout(() => {
+        modal.classList.add("show");
+        modalContent.classList.add("show");
+      }, 10);
+    }
+
+    function closeFAQ() {
+      const modal = document.getElementById("faqModal");
+      const modalContent = document.querySelector(".modal-content");
+      modal.classList.remove("show");
+      modalContent.classList.remove("show");
+      setTimeout(() => {
+        modal.style.display = "none";
+      }, 300);
+    }
+
+    window.onclick = function(event) {
+      const modal = document.getElementById("faqModal");
+      if (event.target == modal) {
+        closeFAQ();
+      }
+    }
   </script>
+</body>
+</html>
