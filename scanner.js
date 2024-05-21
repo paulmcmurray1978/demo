@@ -38,7 +38,12 @@ fileInput.onchange = function (event) {
       // console.log(productName);
       // console.log(image);
       document.getElementById("theScanner").innerHTML =
-        productName + "\r\r" + "<img width='69px' src='" + image + "'/>\r";
+        "<div id='productName'>" +
+        productName +
+        "</div>" +
+        "<img id='theImage' width='69px' src='" +
+        image +
+        "'/>\r";
       // console.log("IMAGE", image);
 
       // const postcode = "NE303TB";
