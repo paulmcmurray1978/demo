@@ -330,12 +330,18 @@ const parseData = (data, productName) => {
     // console.log(row.needs.needs);
     let needs = row.needs.needs.split("\n");
     if (index < 10 && needs.length > 1) {
+      // let question =
+      //   "This is the name of a product you can buy in a supermarket " +
+      //   items.join(", ") +
+      //   ". This is a list of things a food bank needs, seperate by a colon.  " +
+      //   needs.join(" : ") +
+      //   "'.  Please tell me which item from the list the product fits into. ";
       let question =
-        "This is the name of a product you can buy in a supermarket " +
-        items.join(", ") +
-        ". This is a list of things a food bank needs, seperate by a colon.  " +
-        needs.join(" : ") +
-        "'.  Please tell me which item from the list the product fits into. ";
+        "In each of these lines of things a foodbank needs " +
+        needs.join(" \r") +
+        ". \r" +
+        " Does this product name fit into any of them, and if so which one: " +
+        items[0];
       //   console.log(needs.join(", "));
       //   console.log(question);
 
