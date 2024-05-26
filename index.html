@@ -256,6 +256,79 @@ input[type="text"] {
   font-weight: bold;
 }
 
+.loader {
+        transform: rotateZ(45deg);
+        perspective: 1000px;
+        border-radius: 50%;
+        width: 48px;
+        height: 48px;
+        color: #fff;
+      }
+        .loader:before,
+        .loader:after {
+          content: '';
+          display: block;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: inherit;
+          height: inherit;
+          border-radius: 50%;
+          transform: rotateX(70deg);
+          animation: 1s spin linear infinite;
+        }
+        .loader:after {
+          color: #FF3D00;
+          transform: rotateY(70deg);
+          animation-delay: .4s;
+        }
+
+      @keyframes rotate {
+        0% {
+          transform: translate(-50%, -50%) rotateZ(0deg);
+        }
+        100% {
+          transform: translate(-50%, -50%) rotateZ(360deg);
+        }
+      }
+
+      @keyframes rotateccw {
+        0% {
+          transform: translate(-50%, -50%) rotate(0deg);
+        }
+        100% {
+          transform: translate(-50%, -50%) rotate(-360deg);
+        }
+      }
+
+      @keyframes spin {
+        0%,
+        100% {
+          box-shadow: .2em 0px 0 0px currentcolor;
+        }
+        12% {
+          box-shadow: .2em .2em 0 0 currentcolor;
+        }
+        25% {
+          box-shadow: 0 .2em 0 0px currentcolor;
+        }
+        37% {
+          box-shadow: -.2em .2em 0 0 currentcolor;
+        }
+        50% {
+          box-shadow: -.2em 0 0 0 currentcolor;
+        }
+        62% {
+          box-shadow: -.2em -.2em 0 0 currentcolor;
+        }
+        75% {
+          box-shadow: 0px -.2em 0 0 currentcolor;
+        }
+        87% {
+          box-shadow: .2em -.2em 0 0 currentcolor;
+        }
+      }
+   
   </style>
   <script>
     window.alert = function() {};
@@ -273,8 +346,8 @@ input[type="text"] {
     <div class="title">Donation Genie</div>
     <div>
       <div id="status">Initializing</div>
-      <label for="postcode">What is your postcode?</label>
-      <input type="text" id="postcode" oninput="validatePostcode()"/>
+      <label for="postcode" >What is your postcode?</label>
+      <input type="text" id="postcode" value="NE30 3TB" oninput="validatePostcode()"/>
       <div id="postcodeError" style="color: red; display: none;">Invalid postcode format</div>
     </div>
     <button id="startButton" style="display:none">Start Scan</button>
@@ -290,9 +363,9 @@ input[type="text"] {
     <button id="closeButton">Close</button>
     <svg class="overlay fullscreen"></svg>
     <video class="camera fullscreen" muted autoplay="autoplay" playsinline="playsinline" webkit-playsinline></video>
-    <div id="productDisplay" class="product-display">
+    <!-- <div id="productDisplay" class="product-display">
       <!-- Product details will be injected here -->
-    </div>
+    </div> -->
   </div>
   <div id="text"></div>
   <div id="barcodeValue"></div>
@@ -323,7 +396,7 @@ input[type="text"] {
       const scan = document.getElementById("startButton")
       const regex = /^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z]))))\s?[0-9][A-Za-z]{2})$/;
       const errorDiv = document.getElementById('postcodeError');
-
+      localStorage.setItem("postcode", document.getElementById("postcode").value);
       if (regex.test(postcode)) {
         errorDiv.style.display = 'none';
         // scan.style.display = "inline-block"
